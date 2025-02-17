@@ -58,10 +58,10 @@ px(file.path(micro_dir, 'gender.px'))$data
 px(file.path(micro_dir, 'municipality.px'))$data
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # Change CONTACT in all micro files
-#  x2 |>
-#    px_contact("Johan Ejstrud") |>
-#    px_micro(out_dir = micro_dir)
+# # Change CONTACT in all micro files
+# x2 |>
+#   px_contact("Johan Ejstrud") |>
+#   px_micro(out_dir = micro_dir)
 
 ## -----------------------------------------------------------------------------
 individual_keywords <- tibble::tribble(~variable     ,      ~px_description,

@@ -280,6 +280,14 @@ error_if_value_contains_quotation_marks <- function(x) {
   }
 }
 
+is_url <- function(path) {
+  if (!is.character(path) || length(path) != 1) {
+    return(FALSE)
+  }
+
+  stringr::str_detect(path, "^https?://")
+}
+
 #' Check all arguments to px()
 #'
 #' @inheritParams px
@@ -288,7 +296,8 @@ error_if_value_contains_quotation_marks <- function(x) {
 #' @keywords internal
 validate_px_arguments <- function(input, data) {
   if (! any(is_px_file(input), is_xlsx_file(input), is.data.frame(input),
-            is_rds_file(input), is_parquet_file(input), is.null(input))) {
+            is_rds_file(input), is_parquet_file(input), is.null(input),
+            is_url(input))) {
     error("Argument 'input' has wrong format. See ?px.")
   }
 
@@ -317,20 +326,20 @@ validate_px_arguments <- function(input, data) {
 #' @returns Nothing
 #' @keywords internal
 validate_px_save_arguments <- function(x, path, save_data, data_path) {
-  if (! any(is_px_file(path), is_xlsx_file(path))) {
-    error("Argument 'path' must be a path to an .px or .xlsx file.")
+  if (! any(is_px_file(path), is_xlsx_file(path), is_r_file(path))) {
+    error("Argument 'path' must be a path to an .px, .xlsx or .R file.")
   }
 
   if (! is.logical(save_data)) {
     error("Argument 'save_data' must be TRUE or FALSE.")
   }
 
-  if (! any(is.null(data_path), is_rds_file(data_path))) {
+  if (all(!is.null(data_path), all(!is_rds_file(data_path), !is_parquet_file(data_path)))) {
     error("Argument 'data_path' must be a path to an .rds or .parquet file.")
   }
 
-  if (all(!is.null(data_path), !is_xlsx_file(path))) {
-    error("Argument 'data_path' can only be used if 'path' is an .xlsx file.")
+  if (all(!is.null(data_path), all(!is_xlsx_file(path), !is_r_file(path)))) {
+    error("Argument 'data_path' can only be used if 'path' is an .xlsx or .R file.")
   }
 
   if (all(!is.null(data_path), isFALSE(save_data))) {

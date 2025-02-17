@@ -290,6 +290,7 @@ get_metadata_df_from_px <- function(x) {
 
   stub_heading_variables <-
     variables1 %>%
+    sort_variables1() %>%
     dplyr::filter(toupper(.data$pivot) %in% c("STUB", "HEADING")) %>%
     dplyr::distinct(.data$`variable-code`) %>%
     dplyr::pull("variable-code")

@@ -38,7 +38,7 @@ test_that('px_valuenote() and px_valuenotex()', {
 
   valuenote_df3 <- valuenote_df2
   valuenote_df3_expect <-
-    tidyr::crossing(valuenote_df2, language = NA_character_) %>%
+    valuenote_df2 %>%
     dplyr::relocate(valuenote, .after = last_col())
 
   x5 <- px_valuenote(x, valuenote_df3)
@@ -75,18 +75,19 @@ test_that('px_values()', {
   expect <-
     dplyr::tribble(
      ~`variable-code`,  ~code,            ~language,   ~value,
-             "gender",    "K",        NA_character_, "Kvinde",
-             "gender",    "M",        NA_character_,      "M",
-             "gender",    "T",        NA_character_,      "T",
      "place of birth",    "N",        NA_character_,      "N",
      "place of birth",    "S",        NA_character_,      "S",
      "place of birth",    "T",        NA_character_,      "T",
+             "gender",    "K",        NA_character_, "Kvinde",
+             "gender",    "M",        NA_character_,      "M",
+             "gender",    "T",        NA_character_,      "T",
                "time", "2018",        NA_character_,   "2018",
                "time", "2019",        NA_character_,   "2019",
                "time", "2020",        NA_character_,   "2020",
                "time", "2021",        NA_character_,   "2021",
                "time", "2022",        NA_character_,   "2022"
-                  )
+                  ) %>%
+    dplyr::select(-language)
 
   expect_identical(px_values(x1), expect)
 

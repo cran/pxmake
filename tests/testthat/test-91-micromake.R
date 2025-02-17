@@ -204,7 +204,8 @@ test_that("px_micro removes headings where all values are NA", {
     readRDS() %>%
     dplyr::as_tibble() %>%
     dplyr::select(1:2) %>%
-    dplyr::mutate(pnr = ifelse(taar == 1994, NA, pnr))
+    dplyr::mutate(pnr = ifelse(taar == 1994, NA, pnr)) %>%
+    dplyr::arrange_all()
 
   out_dir <- temp_dir()
 
@@ -221,7 +222,8 @@ test_that("px_micro removes headings where all values are NA", {
     dplyr::count(taar, pnr) %>%
     tidyr::drop_na(pnr) %>%
     dplyr::select(pnr, taar, n) %>%
-    dplyr::mutate(n = as.double(n))
+    dplyr::mutate(n = as.double(n)) %>%
+    dplyr::mutate(across(where(is.character), as.factor))
 
   expect_identical(micro_df, target)
 })

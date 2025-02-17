@@ -1,4 +1,26 @@
+# pxmake 0.15.1
+
+## Bug fixes and minor improvements
+- Remove invalid URL from `px_variable_label()` documentation.
+
+# pxmake 0.15.0
+
+## New features
+- Variable order is preserved as it appears in the data set. (#345)
+- `px()` supports URLs as input. (#353)
+- `px_save()` can save px object as an R script that, when run, regenerates the
+px object. The implementation is not fully reliable; in some cases, running the
+generated R script produces a slightly different px object. (#350)
+
+## Bug fixes and minor improvements
+- Bugfix: `px_micro()` sometimes ordered variable references incorrectly in 
+CELLNOTES. (#348)
+- Removed `dontrun` example from `px_classification()` by updating package 
+files. (#346)
+- Use *main language* VALUES as CODES in PX-files without CODES. (#361)
+
 # pxmake 0.14.2
+- Add CRAN note explaning why /dontrun{} is used.
 
 # pxmake 0.14.1
 

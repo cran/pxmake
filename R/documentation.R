@@ -1,4 +1,4 @@
-# Functions to create roxygen2 documention
+# Functions to create roxygen2 documentation
 
 keyword_to_function <- function(keyword) {
   paste0("px_", gsub("-", "_", tolower(keyword)))
@@ -118,7 +118,7 @@ doc_keyword_function_intro <- function(keyword) {
     dplyr::filter(keyword == !!keyword) %>%
     dplyr::pull(.data$documentation)
 
-  if (length(url) == 1) {
+  if (! any(identical(url, character(0)), identical(url, ""))) {
     str <-
       stringr::str_glue("{str}",
                       "@seealso [Statistics Sweden's documentation]({url})",
