@@ -12,8 +12,8 @@ status](https://www.r-pkg.org/badges/version/pxmake)](https://cran.r-project.org
 coverage](https://codecov.io/gh/StatisticsGreenland/pxmake/branch/main/graph/badge.svg)](https://app.codecov.io/gh/StatisticsGreenland/pxmake?branch=main)
 [![Mentioned in Awesome Official
 Statistics](https://awesome.re/mentioned-badge.svg)](https://github.com/SNStatComp/awesome-official-statistics-software)
-[![Total
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/pxmake)](https://cran.r-project.org/package=pxmake)
+[![Montly
+downloads](https://cranlogs.r-pkg.org/badges/last-month/pxmake)](https://cran.r-project.org/package=pxmake)
 <!-- badges: end -->
 
 ## Overview
@@ -72,7 +72,7 @@ x <- px(data.frame(year = as.character(rep(2021:2023, each = 3)),
 head(x$data, 4)
 #> # A tibble: 4 × 3
 #>   year  group value
-#>   <fct> <fct> <dbl>
+#>   <chr> <chr> <dbl>
 #> 1 2021  a     0.266
 #> 2 2021  b     0.372
 #> 3 2021  c     0.573
@@ -231,15 +231,4 @@ to be able ro run these tests. This only works on Windows.
 
 ### How to create a new release
 
-1.  Checkout ‘main’ branch.
-2.  Run `usethis::use_version('major'/'minor'/'patch')`. Answer ‘No’ to
-    the prompt ‘Is it ok to commit them?’.
-3.  Update NEWS.md with all changes since last release.
-4.  Commit changes with message ‘Increment version number to X.Y.Z’.
-5.  Run `git tag vX.Y.Z`.
-6.  Run `git push`.
-7.  Run `git push --tags`.
-8.  Run `devtools::use_github_release()`.
-9.  Run `usethis::use_version('dev')`. Answer ‘Yes’ to the prompt ‘Is it
-    ok to commit them?’.
-10. Run `git push`.
+Run `usethis::use_release_issue()` and follow checklist.

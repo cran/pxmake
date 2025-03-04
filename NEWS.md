@@ -1,3 +1,18 @@
+# pxmake 0.16.0
+
+## New features
+- When creating px object from data frame the ordering in cells1 is determined 
+based on the type in the data frame.
+
+## Breaking changes
+- Require R version >= 4.1. (#376)
+- Store all non-figures variables in data table as character instead of as
+factors. (#375)
+
+## Bug fixes and minor improvements
+- Make tests an examples 'fail gracefully' if URL can't be reached, to comply 
+with CRAN policies. (#379)
+
 # pxmake 0.15.1
 
 ## Bug fixes and minor improvements
