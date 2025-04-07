@@ -1,6 +1,6 @@
 Package: pxmake
 Title: Make PX-Files in R
-Version: 0.16.0
+Version: 0.17.0
 Authors@R: c(
              person("Johan", "Ejstrud", 
                     email = "johan@ejstrud.com",
@@ -21,9 +21,9 @@ Description: Create PX-files from scratch or read and modify existing ones.
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
-Imports: arrow, dplyr, furrr, magrittr, methods, openxlsx, pillar,
-        purrr, readxl, rlang, stats, stringi, stringr, tibble, tidyr,
-        tools, utils, vctrs
+Imports: arrow, dplyr, furrr, magrittr, methods, openxlsx, purrr,
+        readxl, rlang, stats, stringi, stringr, tibble, tidyr, tools,
+        utils, vctrs
 Suggests: knitr, rmarkdown, withr, testthat (>= 3.0.0), curl
 Config/testthat/edition: 3
 Config/testthat/parallel: true
@@ -35,10 +35,10 @@ URL: https://github.com/StatisticsGreenland/pxmake,
         https://statisticsgreenland.github.io/pxmake/
 BugReports: https://github.com/StatisticsGreenland/pxmake/issues
 NeedsCompilation: no
-Packaged: 2025-03-04 16:42:44 UTC; johan
+Packaged: 2025-04-04 12:13:31 UTC; johan
 Author: Johan Ejstrud [cre, aut],
   Lars Pedersen [aut],
   Statistics Greenland [cph] (https://stat.gl/)
 Maintainer: Johan Ejstrud <johan@ejstrud.com>
 Repository: CRAN
-Date/Publication: 2025-03-04 23:40:02 UTC
+Date/Publication: 2025-04-07 12:20:02 UTC

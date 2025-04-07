@@ -1,3 +1,17 @@
+# pxmake 0.17.0
+
+## Bug fixes and minor improvements
+- Remove import of 'pillar' package. (#387)
+- Fix various issues with CONTVARIABLE. (#364 #386)
+- `px_data()` updates metadata to match new data frame. (#385 #396 #399)
+- When adding more languages dummy values are added as VALUES instead of blanks.
+- Throw error when using `px_save()` on a px object that contains duplicates in 
+the data table. (#402)
+- Don't save NA values in aggregations files. (#401)
+
+## Breaking changes
+- Create aggregations from texts in section [Aggtext]. (#389)
+
 # pxmake 0.16.0
 
 ## New features

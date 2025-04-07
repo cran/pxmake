@@ -132,13 +132,15 @@ aggregation_df <- function(path) {
     dplyr::mutate(across(everything(), ~ dplyr::na_if(.x, "")))
 
   df <- dplyr::tibble(valuecode           = as.character(),
-                      !!aggregation_name := factor(levels = aggregation_df$aggreg,
+                      !!aggregation_name := factor(levels = aggregation_df$aggtext,
                                                    ordered = TRUE
                                                    )
                       )
 
   for (aggregation_group in aggregation_df$aggreg) {
     section <- extract_section(agg_lines, paste0("[", aggregation_group, "]"))
+
+    aggregation_text <- aggregation_df$aggtext[aggregation_df$aggreg == aggregation_group]
 
     if (is.null(section)) {
       warning("No group with label '[", aggregation_group, "]' found in '",
@@ -154,8 +156,8 @@ aggregation_df <- function(path) {
       df <-
         dplyr::bind_rows(df,
                          dplyr::tibble(valuecode = aggregation_values,
-                                       !!aggregation_name := factor(aggregation_group,
-                                                                    levels = aggregation_df$aggreg,
+                                       !!aggregation_name := factor(aggregation_text,
+                                                                    levels = aggregation_df$aggtext,
                                                                     ordered = TRUE
                                        )
                          )
@@ -272,8 +274,14 @@ px_classification_from_df <- function(name, prestext, domain, df) {
 #' `prestext` and `domain` are required. If a classification is created from .vs
 #' and .agg files, all other arguments should be empty.
 #'
-#' Only type 'V' value sets are supported. Type 'H' and 'N' value sets are
-#' not supported.
+#' For aggregations, it's normally possible to have codes and values in the .agg
+#' file under the sections '\[Aggreg\]' and '\[Aggtext\]' respectively. However,
+#' in pxmake's implementation of classifications, it's not possible to
+#' distinguish between these. When a new classification is created, the values
+#' in the section '\[Aggtext\]' are used as aggregation values.
+#'
+#' Only value sets of type 'V' are supported. Type values sets with type 'H' and
+#' 'N' are not supported.
 #'
 #' @param name Optional. Name of the classification.
 #' @param prestext Optional. Presentation text.
@@ -282,6 +290,8 @@ px_classification_from_df <- function(name, prestext, domain, df) {
 #' @param df Optional. A data frame with required column 'valuecode' and
 #' optional column 'valuetext', if the codes have texts. Each additional column
 #' represents an aggregation. The column name is the name of the aggregation.
+#' If the column type is character the aggregation levels will be sorted
+#' alphabetically; use factors to control the ordering.
 #' @param vs_path Optional. Path to a values set (.vs) file.
 #' @param agg_paths Optional.
 #' \itemize{
@@ -453,11 +463,12 @@ write_value_set <- function(c, directory) {
 write_aggregation <- function(aggregation, c, directory) {
   filename <- file.path(directory, paste0(aggregation, ".agg"))
 
-  groups <- levels(c$df[[aggregation]])
+  groups <- levels(na.omit(c$df[[aggregation]]))
 
   agg_texts <-
     c$df %>%
     dplyr::distinct(.data$valuecode, !!rlang::sym(aggregation)) %>%
+    tidyr::drop_na() %>%
     dplyr::arrange(as.character(!!rlang::sym(aggregation))) %>%
     tidyr::pivot_wider(names_from = all_of(aggregation),
                        values_from  = "valuecode",
@@ -469,7 +480,7 @@ write_aggregation <- function(aggregation, c, directory) {
                     stringr::str_glue("[{name}]\n",
                                       "{paste(enumerate_lines(value), collapse = '\n')}"
                     )
-    ) %>%
+                  ) %>%
     dplyr::pull("str") %>%
     paste0(collapse = paste0("\n", blank_line(), "\n"))
 

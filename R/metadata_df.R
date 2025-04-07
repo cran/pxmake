@@ -308,13 +308,19 @@ get_metadata_df_from_px <- function(x) {
   variable_type <-
     variables1 %>%
     tidyr::drop_na("variable-type") %>%
-    dplyr::filter(! toupper(.data$`variable-type`) %in% c("CONTVARIABLE")) %>%
     tidyr::pivot_longer(cols= "variable-type",
                         names_to = "keyword",
                         values_to = "value"
                         ) %>%
     dplyr::mutate(keyword = toupper(.data$keyword)) %>%
     dplyr::select("keyword", "variable" = "variable-label", "language", "value") %>%
+    wrap_varaible_in_list("value")
+
+  contvariable <-
+    variables1 %>%
+    dplyr::filter(.data$contvariable) %>%
+    dplyr::mutate(keyword = "CONTVARIABLE") %>%
+    dplyr::select("keyword", "language", "value" = "variable-label") %>%
     wrap_varaible_in_list("value")
 
   time_metadata <-
@@ -421,6 +427,7 @@ get_metadata_df_from_px <- function(x) {
                      languages,
                      table,
                      table_language_dependent,
+                     contvariable,
                      variablecode,
                      note_etc,
                      head_stub,
