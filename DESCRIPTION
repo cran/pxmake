@@ -1,6 +1,6 @@
 Package: pxmake
 Title: Make PX-Files in R
-Version: 0.17.0
+Version: 0.18.0
 Authors@R: c(
              person("Johan", "Ejstrud", 
                     email = "johan@ejstrud.com",
@@ -35,10 +35,10 @@ URL: https://github.com/StatisticsGreenland/pxmake,
         https://statisticsgreenland.github.io/pxmake/
 BugReports: https://github.com/StatisticsGreenland/pxmake/issues
 NeedsCompilation: no
-Packaged: 2025-04-04 12:13:31 UTC; johan
+Packaged: 2025-05-30 13:56:09 UTC; johan
 Author: Johan Ejstrud [cre, aut],
   Lars Pedersen [aut],
   Statistics Greenland [cph] (https://stat.gl/)
 Maintainer: Johan Ejstrud <johan@ejstrud.com>
 Repository: CRAN
-Date/Publication: 2025-04-07 12:20:02 UTC
+Date/Publication: 2025-05-30 14:20:02 UTC

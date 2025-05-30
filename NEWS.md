@@ -1,3 +1,17 @@
+# pxmake 0.18.0
+
+## New features
+- `px_data()` has a new argument, `labels`, which makes the function return the
+data table with VALUES instead of CODES. (#419)
+
+## Breaking changes
+- ELIMINATION is changed from language dependent to not language dependent, and
+instead of adding ELIMINATION as values, it is done with codes. (#406)
+
+## Bug fixes and minor improvements
+- Bugfix when saving as R scripts. (#410)
+- Elimination values and order are preserved when changing data table. (#418, #420)
+
 # pxmake 0.17.0
 
 ## Bug fixes and minor improvements

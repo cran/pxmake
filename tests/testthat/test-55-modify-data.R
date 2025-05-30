@@ -136,4 +136,69 @@ test_that('modifying data updates metadata', {
   expect_identical(x_lang2$cells2$language, rep(c('en', 'fr'), 9))
 })
 
+test_that('Elimination values and order is preserved ', {
+  elimination_df <- dplyr::tibble(`variable-code` = 'gender',
+                                  elimination = "all genders"
+                                  )
+
+  elimination_order <- dplyr::tibble(`variable-code` = 'gender',
+                                     code = 'all genders',
+                                     order = 0
+                                     )
+  x1 <-
+    population_gl %>%
+    px() %>%
+    px_elimination(elimination_df) %>%
+    px_order(elimination_order)
+
+  population_gl_2024 <-
+    population_gl %>%
+    dplyr::filter(year == 2024)
+
+  x2 <-
+    x1 %>%
+    px_data(population_gl_2024)
+
+  expect_identical(px_elimination(x2), elimination_df)
+
+  px_order(x2) %>%
+    dplyr::semi_join(elimination_df,
+                     by = c("variable-code" = "variable-code",
+                            "code" = "elimination"
+                            )
+                     ) %>%
+    expect_identical(elimination_order)
+})
+
+test_that("Labels can be returned", {
+  x1 <- px_from_table_name('BEXSTA')
+
+  expect_error(px_data(x1, value = population_gl, labels = TRUE),
+               regexp = "can only be used"
+               )
+
+  expect_error(px_data(x1, labels = 'fr'),
+               regexp = "Language.*is not defined"
+               )
+
+  expect_identical(px_data(x1, labels = TRUE),
+                   px_data(x1, labels = 'en')
+                   )
+
+  expect_identical(head(px_data(x1, labels = 'kl'), 3),
+                   tibble::tribble(
+                     ~`place of birth`,  ~gender,  ~time, ~persons,
+                     "Kalaallit Nunaat", "Arnat", "2018",    24392,
+                     "Kalaallit Nunaat", "Arnat", "2019",    24434,
+                     "Kalaallit Nunaat", "Arnat", "2020",    24452
+                     )
+                   )
+
+  x2 <- px(population_gl)
+
+  expect_identical(px_data(x2, labels = TRUE),
+                   px_data(x2)
+                   )
+})
+
 

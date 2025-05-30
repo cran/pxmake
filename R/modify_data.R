@@ -1,6 +1,6 @@
 #' @rdname px_data.px
 #' @export
-px_data <- function(x, value, validate) {
+px_data <- function(x, value, labels, validate) {
   UseMethod("px_data")
 }
 
@@ -8,6 +8,10 @@ px_data <- function(x, value, validate) {
 #' @param value Optional. A data frame. If missing, the current DATA is returned.
 #' If NULL, all data rows are removed.
 #' @eval add_return_px_or_df()
+#' @param labels Optional. Logic or character vector. If TRUE, the data table
+#' is returned with VALUES instead of CODES. By default the VALUES of the main
+#' language are returned, use a character language code to return VALUES for a
+#' specific language.
 #' @eval param_validate()
 #'
 #' @details If adding a new data frame, metadata is generated for the new
@@ -24,10 +28,68 @@ px_data <- function(x, value, validate) {
 #'
 #' x2 <- px_data(x1, population_gl_2024)
 #'
+#' # Return data table with VALUES instead of CODES
+#' px_data(x1, labels = TRUE)
+#'
+#' # Return VALUES for a specific language
+#' x_mult <-
+#'   x1 |>
+#'   px_languages(c("en", "gl"))
+#'
+#' px_data(x_mult, labels = "gl")
+#'
 #' @export
-px_data.px <- function(x, value, validate = TRUE) {
+px_data.px <- function(x, value, labels = FALSE, validate = TRUE) {
+  validate_px_data_arguments(x, value, labels, validate)
+
   if (missing(value)) {
-    return(x$data)
+    if (isFALSE(labels)) {
+      return(x$data)
+    }
+
+    if (isTRUE(labels)) {
+      m_language <- defined_languages(x)[1]
+    } else {
+      m_language <- labels
+    }
+
+    error_if_language_is_undefined(m_language, x)
+
+    data_with_labels <-
+      px_data(x) %>%
+      dplyr::mutate(id_ = dplyr::row_number()) %>%
+      tidyr::pivot_longer(-c(px_figures(x), "id_"),
+                          names_to = 'variable-code',
+                          values_to = 'code'
+                          ) %>%
+      dplyr::left_join(px_values(x),
+                       by = c('variable-code', 'code'),
+                       relationship = "many-to-many"
+                       ) %>%
+      { if (! "language" %in% names(.)) {
+          dplyr::mutate(., language = m_language) # add dummy language
+        } else {
+          .
+        }
+      } %>%
+      dplyr::mutate(language = ifelse(is.na(.data$language),
+                                      m_language,
+                                      .data$language
+                                      ),
+                    value = ifelse(is.na(.data$value),
+                                   .data$code,
+                                   .data$value
+                                   )
+                    ) %>%
+      dplyr::filter(.data$language %in% m_language) %>%
+      dplyr::select(-"code", -"language") %>%
+      tidyr::pivot_wider(names_from = 'variable-code',
+                         values_from = 'value'
+                         ) %>%
+      dplyr::select(-"id_") %>%
+      dplyr::relocate(names(px_data(x)))
+
+    return(data_with_labels)
   } else if (is.null(value)) {
     x$data <- dplyr::filter(x$data, FALSE)
   } else {
@@ -38,6 +100,29 @@ px_data.px <- function(x, value, validate = TRUE) {
     dummy_px <-
       px_from_data_df(value) %>%
       px_languages(defined_languages(x))
+
+    if (! is.null(px_elimination(x))) {
+      elimination_values <-
+        px_values(x) %>%
+        dplyr::semi_join(px_elimination(x),
+                         by = c('variable-code' = 'variable-code',
+                                'code' = 'elimination'
+                                )
+                         )
+
+      elimination_order <-
+        px_order(x) %>%
+        dplyr::semi_join(px_elimination(x),
+                         by = c('variable-code' = 'variable-code',
+                                'code' = 'elimination'
+                                )
+                         )
+
+      dummy_px <-
+        dummy_px %>%
+        px_values(elimination_values) %>%
+        px_order(elimination_order)
+    }
 
     # Add new variables from x2 to x1, and remove variables from x1 that are
     # not in x2.
