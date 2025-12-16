@@ -1,3 +1,21 @@
+# pxmake 0.19.0
+
+## New features
+- `px_data()` has a new argument, `sort`, which return the data table sorted by
+sort order. (#440)
+
+## Bug fixes and minor improvements
+- Micro files with multiple headings now only removes a heading if it is NA
+across all other headings.
+- Add support for short TIMEVAL syntax. (#435)
+- Bugfix: Add MAP to variables2 instead of table2. ($409)
+- Add support for OFFICIAL_STATISTICS keyword. (#443)
+- Add support for direct link download URL as input to `px()`. (#445)
+- Fix namespace issue with px_keywords data set. (#358)
+- Preserve VALUENOTE(X) when making file multilingual. (#363)
+- Fix bug when figures variable is moved in data table. (#411)
+- Fix incorrectly closed parentheses. (#413)
+
 # pxmake 0.18.0
 
 ## New features

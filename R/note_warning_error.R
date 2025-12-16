@@ -194,12 +194,12 @@ error_if_variable_label_is_na <- function(x) {
 error_if_misplaced_keywords_in_table <- function(x, table_name) {
   if (table_name == "table1") {
     other_keywords <-
-      px_keywords %>%
+      pxmake::px_keywords %>%
       dplyr::filter(! (.data$table_meta & !.data$language_dependent)) %>%
       dplyr::pull(.data$keyword)
   } else if (table_name == "table2") {
     other_keywords <-
-      px_keywords %>%
+      pxmake::px_keywords %>%
       dplyr::filter(! (.data$table_meta & .data$language_dependent)) %>%
       dplyr::pull(.data$keyword)
   } else {
@@ -488,7 +488,7 @@ validate_px_classification_arguments <- function(name,
 #'
 #' @returns Nothing
 #' @keywords internal
-validate_px_data_arguments <- function(x, value, labels, validate) {
+validate_px_data_arguments <- function(x, value, labels, sort, validate) {
   if (! inherits(x, "px")) {
     error("Argument 'x' must be a px object.")
   }
@@ -505,14 +505,24 @@ validate_px_data_arguments <- function(x, value, labels, validate) {
     }
   }
 
-  # labels can only be used if value is missing
+  # labels and sort can only be used if value is missing
   if (! missing(value) & ! isFALSE(labels)) {
     error("Argument 'labels' can only be used if 'value' is missing.")
+  }
+
+  if (! missing(value) & ! isFALSE(sort)) {
+    error("Argument 'sort' can only be used if 'value' is missing.")
   }
 
   if (! missing(validate)) {
     if (! is.logical(validate)) {
       error("Argument 'validate' must be TRUE or FALSE.")
+    }
+  }
+
+  if (! missing(sort)) {
+    if (! is.logical(sort)) {
+      error("Argument 'sort' must be TRUE or FALSE.")
     }
   }
 }

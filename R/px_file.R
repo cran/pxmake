@@ -96,7 +96,7 @@ get_data_cube <- function(metadata_df, data_df) {
     # sortorder for second heading var, etc.
     dplyr::arrange(dplyr::across(zip_vectors(heading_sortorder_vars, heading_code_vars))) %>%
     dplyr::select(-all_of(heading_sortorder_vars)) %>%
-    { if(length(heading_code_vars > 0)) {
+    { if(length(heading_code_vars) > 0) {
       tidyr::pivot_wider(.,
                          names_from = all_of(heading_code_vars),
                          values_from = all_of(figures_var)
@@ -127,7 +127,7 @@ format_px_object_as_lines <- function(x) {
 
   metadata_lines <-
     metadata_df %>%
-    dplyr::left_join(dplyr::select(px_keywords, "keyword", "quote_value"),
+    dplyr::left_join(dplyr::select(pxmake::px_keywords, "keyword", "quote_value"),
                      by = 'keyword'
                      ) %>%
     dplyr::rowwise() %>%
@@ -166,7 +166,7 @@ format_px_object_as_lines <- function(x) {
     dplyr::pull(.data$line)
 
   data_lines <-
-    get_data_cube(metadata_df, x$data) %>%
+    get_data_cube(metadata_df = metadata_df, data_df = x$data) %>%
     mutate_all_vars_to_character() %>%
     dplyr::mutate(dplyr::across(everything(), ~tidyr::replace_na(.x, '"-"'))) %>%
     tidyr::unite("tmp", sep = " ") %>%
@@ -249,7 +249,7 @@ px_from_px_file <- function(path) {
     dplyr::left_join(dplyr::select(name_relation, -"main_language"),
                      by = c("language", "variable-label")
                      ) %>%
-    dplyr::left_join(px_keywords, by = "keyword")
+    dplyr::left_join(pxmake::px_keywords, by = "keyword")
 
   # languages
   languages <-
@@ -349,7 +349,7 @@ px_from_px_file <- function(path) {
   # variables2
   variables2 <-
     metadata %>%
-    dplyr::filter(.data$keyword %in% c("NOTE", "DOMAIN"),
+    dplyr::filter(.data$keyword %in% c("NOTE", "DOMAIN", "MAP"),
                   ! is.na(.data$`variable-code`)
                   ) %>%
     dplyr::mutate(keyword = tolower(.data$keyword)) %>%
@@ -360,7 +360,7 @@ px_from_px_file <- function(path) {
     tidyr::pivot_wider(names_from = "keyword",
                        values_from = "value"
                        ) %>%
-    # Add variables without NOTE, DOMAIN to get all variable-labels
+    # Add variables without NOTE, DOMAIN or MAP to get all variable-labels
     dplyr::bind_rows(dplyr::anti_join(dplyr::select(name_relation, -"main_language"),
                                       .,
                                       by=c("variable-code",
