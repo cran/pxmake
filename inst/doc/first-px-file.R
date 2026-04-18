@@ -18,7 +18,7 @@ x <- px(population_gl)
 px_save(x, "population_gl.px")
 
 ## ----comment="", echo = FALSE-------------------------------------------------
-readLines('population_gl.px') |> cat(sep = '\n')
+readLines("population_gl.px") |> cat(sep = "\n")
 
 ## -----------------------------------------------------------------------------
 x2 <- px("population_gl.px")
@@ -28,7 +28,7 @@ x3 <- px_title(x, "Population in Greenland")
 
 ## -----------------------------------------------------------------------------
 x3 |>
-  px_codepage("UTF-8") |> # Change file encoding  
+  px_codepage("UTF-8") |> # Change file encoding
   px_matrix("pop") |>
   px_contact("Johan Ejstrud") |>
   px_subject_code("GL") |>
@@ -42,5 +42,5 @@ x3 |>
   px_save("population_gl_modified.px")
 
 ## ----comment="", echo = FALSE-------------------------------------------------
-readLines('population_gl_modified.px') |> cat(sep = '\n')
+readLines("population_gl_modified.px") |> cat(sep = "\n")
 

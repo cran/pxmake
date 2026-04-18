@@ -349,7 +349,7 @@ built in data set <code>population_gl</code>.</p>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">px</span>(population_gl)</span></code></pre></div>
 <p>Currently, <code>x</code> has neither a main language nor any
 additional languages.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">px_language</span>(x)  <span class="co"># Main language</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">px_language</span>(x) <span class="co"># Main language</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; NULL</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">px_languages</span>(x) <span class="co"># All languages</span></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
@@ -367,11 +367,11 @@ keywords. For example CONTACT, can be set simultaneously for both
 languages:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">px_contact</span>(x2, <span class="st">&quot;Johan Ejstrud&quot;</span>)</span></code></pre></div>
 <p>or it can be set with distinct values for the two languages:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">px_contact</span>(x3, dplyr<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>language, <span class="sc">~</span>value,</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                                    <span class="st">&quot;kl&quot;</span>, <span class="st">&quot;Lars Pedersen&quot;</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                                    <span class="st">&quot;da&quot;</span>, <span class="st">&quot;Johan Ejstrud&quot;</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                                    )</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>                 )</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">px_contact</span>(x3, dplyr<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="sc">~</span>language, <span class="sc">~</span>value,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="st">&quot;kl&quot;</span>, <span class="st">&quot;Lars Pedersen&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="st">&quot;da&quot;</span>, <span class="st">&quot;Johan Ejstrud&quot;</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>))</span></code></pre></div>
 <p>In general, changing a keyword for multiple languages, requires a
 data frame where the column ‘language’ has been added. See the help
 pages for each functions to see the exact details on which columns are

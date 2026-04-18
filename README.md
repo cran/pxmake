@@ -7,7 +7,7 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pxmake)](https://cran.r-project.org/package=pxmake)
-![R-CMD-check](https://github.com/StatisticsGreenland/pxmake/actions/workflows/R-CMD-check.yml/badge.svg)
+[![Tests](https://github.com/StatisticsGreenland/pxmake/actions/workflows/tests.yml/badge.svg)](https://github.com/StatisticsGreenland/pxmake/actions/workflows/tests.yml)
 [![Codecov test
 coverage](https://codecov.io/gh/StatisticsGreenland/pxmake/branch/main/graph/badge.svg)](https://app.codecov.io/gh/StatisticsGreenland/pxmake?branch=main)
 [![Mentioned in Awesome Official
@@ -63,11 +63,11 @@ tidyverse style by using the pipe operator `%>%`.
 library(magrittr) # import pipe
 
 # Create px object from data frame
-x <- px(data.frame(year = as.character(rep(2021:2023, each = 3)), 
-                   group = c('a', 'b', 'c'), 
-                   value = runif(9)
-                   )
-        ) 
+x <- px(data.frame(
+  year = as.character(rep(2021:2023, each = 3)),
+  group = c("a", "b", "c"),
+  value = runif(9)
+))
 
 head(x$data, 4)
 #> # A tibble: 4 × 3
@@ -78,17 +78,17 @@ head(x$data, 4)
 #> 3 2021  c     0.573
 #> 4 2022  a     0.908
 
-x %>% 
-  px_timeval("year") %>%  # Set year as TIMEVAL
-  px_heading("year") %>%  # Set year as HEADING
-  px_stub("group") %>%    # Set group as STUB
-  px_decimals("2") %>%    # Set DECIMALS to 2
+x %>%
+  px_timeval("year") %>% # Set year as TIMEVAL
+  px_heading("year") %>% # Set year as HEADING
+  px_stub("group") %>% # Set group as STUB
+  px_decimals("2") %>% # Set DECIMALS to 2
   px_save("example.px") # Save as PX-file
 ```
 
 ### Modifying functions
 
-Currently the following 50 keywords have a modifying function in pxmake:
+Currently the following 59 keywords have a modifying function in pxmake:
 
     #>  Keyword             Function name         
     #>  AGGREGALLOWED       px_aggregallowed      
@@ -107,6 +107,14 @@ Currently the following 50 keywords have a modifying function in pxmake:
     #>  COPYRIGHT           px_copyright          
     #>  CREATION-DATE       px_creation_date      
     #>  DATA                px_data               
+    #>  DATABASE            px_database           
+    #>  DATASYMBOL1         px_datasymbol1        
+    #>  DATASYMBOL2         px_datasymbol2        
+    #>  DATASYMBOL3         px_datasymbol3        
+    #>  DATASYMBOL4         px_datasymbol4        
+    #>  DATASYMBOL5         px_datasymbol5        
+    #>  DATASYMBOL6         px_datasymbol6        
+    #>  DATASYMBOLNIL       px_datasymbolnil      
     #>  DECIMALS            px_decimals           
     #>  DESCRIPTION         px_description        
     #>  DESCRIPTIONDEFAULT  px_descriptiondefault 
@@ -125,6 +133,7 @@ Currently the following 50 keywords have a modifying function in pxmake:
     #>  NOTEX               px_notex              
     #>  OFFICIAL-STATISTICS px_official_statistics
     #>  PRECISION           px_precision          
+    #>  REFPERIOD           px_refperiod          
     #>  SHOWDECIMALS        px_showdecimals       
     #>  SOURCE              px_source             
     #>  STOCKFA             px_stockfa            
@@ -159,24 +168,16 @@ See the help page for each modifying function for more information.
 Keywords without modifying functions
 </summary>
 
-These 35 keywords currently doesn’t have a modifying function, but can
+These 26 keywords currently doesn’t have a modifying function, but can
 be implemented.
 
     #>  Keyword             Function name          Priority Complexity
     #>  ATTRIBUTE-ID        px_attribute_id                           
     #>  ATTRIBUTE-TEXT      px_attribute_text                         
     #>  ATTRIBUTES          px_attributes                             
-    #>  DATABASE            px_database                               
     #>  DATANOTE            px_datanote                               
     #>  DATANOTECELL        px_datanotecell                           
     #>  DATANOTESUM         px_datanotesum                            
-    #>  DATASYMBOL1         px_datasymbol1                            
-    #>  DATASYMBOL2         px_datasymbol2                            
-    #>  DATASYMBOL3         px_datasymbol3                            
-    #>  DATASYMBOL4         px_datasymbol4                            
-    #>  DATASYMBOL5         px_datasymbol5                            
-    #>  DATASYMBOL6         px_datasymbol6                            
-    #>  DATASYMBOLNIL       px_datasymbolnil                          
     #>  DATASYMBOLSUM       px_datasymbolsum                          
     #>  DAYADJ              px_dayadj                                 
     #>  DEFAULT-GRAPH       px_default_graph                          
@@ -193,7 +194,6 @@ be implemented.
     #>  PARTITIONED         px_partitioned                            
     #>  PRESTEXT            px_prestext                               
     #>  PX-SERVER           px_px_server                              
-    #>  REFPERIOD           px_refperiod                              
     #>  ROUNDING            px_rounding                               
     #>  SEASADJ             px_seasadj                                
     #>  SURVEY              px_survey                                 
@@ -227,7 +227,7 @@ homepage](https://www.scb.se/globalassets/vara-tjanster/px-programmen/px-file_fo
 ### PxJob
 
 Some tests cases uses
-[PxJob](https://stat.fi/tup/tilastotietokannat/px-tuoteperhe_en.html).
+[PxJob](https://stat.fi/en/services/statistical-data-services/statistical-databases/px-suite).
 Install [pxjob64Win](https://github.com/StatisticsGreenland/pxjob64Win)
 to be able ro run these tests. This only works on Windows.
 

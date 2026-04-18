@@ -10,7 +10,7 @@ library(pxmake)
 x <- px(population_gl)
 
 ## -----------------------------------------------------------------------------
-px_language(x)  # Main language
+px_language(x) # Main language
 px_languages(x) # All languages
 
 ## -----------------------------------------------------------------------------
@@ -23,9 +23,9 @@ x2 <- px_languages(x1, c("da", "kl"))
 x3 <- px_contact(x2, "Johan Ejstrud")
 
 ## -----------------------------------------------------------------------------
-x4 <- px_contact(x3, dplyr::tribble(~language, ~value,
-                                    "kl", "Lars Pedersen",
-                                    "da", "Johan Ejstrud"
-                                    )
-                 )
+x4 <- px_contact(x3, dplyr::tribble(
+  ~language, ~value,
+  "kl", "Lars Pedersen",
+  "da", "Johan Ejstrud"
+))
 

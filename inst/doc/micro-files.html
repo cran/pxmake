@@ -365,20 +365,22 @@ instead create a count of each individual variable.</p>
 <code>greenlanders</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(pxmake)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>greenlanders <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">arrange_all</span>()</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 4</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;    cohort gender   age municipality</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;       </span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt;  1 A      female    21 Sermersooq  </span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;  2 A      female    59 Qeqertalik  </span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;  3 A      male      24 Kujalleq    </span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt;  4 A      male      48 Qeqqata     </span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;  5 A      male      63 Avannaata   </span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt;  6 B      female    32 Kujalleq    </span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;  7 B      female    73 Avannaata   </span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;  8 B      male      44 Qeqertalik  </span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt;  9 B      male      62 Sermersooq  </span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; 10 B      male      98 Qeqertalik</span></span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>greenlanders <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange_all</span>()</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 4</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt;    cohort gender   age municipality</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;       </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;  1 A      female    21 Sermersooq  </span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt;  2 A      female    59 Qeqertalik  </span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;  3 A      male      24 Kujalleq    </span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt;  4 A      male      48 Qeqqata     </span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;  5 A      male      63 Avannaata   </span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;  6 B      female    32 Kujalleq    </span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt;  7 B      female    73 Avannaata   </span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt;  8 B      male      44 Qeqertalik  </span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt;  9 B      male      62 Sermersooq  </span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; 10 B      male      98 Qeqertalik</span></span></code></pre></div>
 </div>
 <div id="how-to-create-micro-files" class="section level2">
 <h2>How to create micro files</h2>
@@ -412,8 +414,8 @@ all the created PX-files.</p>
 for ‘gender’, ‘age’ and ‘municipality’.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>x2 <span class="ot">&lt;-</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  x <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">px_stub</span>(<span class="st">&#39;age&#39;</span>) <span class="sc">|&gt;</span>    <span class="co"># Change age to STUB</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">px_heading</span>(<span class="st">&#39;cohort&#39;</span>) <span class="co"># Change cohort to HEADING</span></span></code></pre></div>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">px_stub</span>(<span class="st">&quot;age&quot;</span>) <span class="sc">|&gt;</span> <span class="co"># Change age to STUB</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">px_heading</span>(<span class="st">&quot;cohort&quot;</span>) <span class="co"># Change cohort to HEADING</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Clear folder</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">unlink</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&quot;*.px&quot;</span>))</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
@@ -424,7 +426,7 @@ for ‘gender’, ‘age’ and ‘municipality’.</p>
 <p>Each file contains one of the three variables as STUB, ‘cohort’ as
 HEADING, and a variable ‘n’ which is the count of each combination of
 the variables.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&#39;age.px&#39;</span>))<span class="sc">$</span>data</span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&quot;age.px&quot;</span>))<span class="sc">$</span>data</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 120 × 3</span></span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt;    age   cohort     n</span></span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;</span></span>
@@ -440,7 +442,7 @@ the variables.</p>
 <span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; 10 22    B         NA</span></span>
 <span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 110 more rows</span></span>
 <span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&#39;gender.px&#39;</span>))<span class="sc">$</span>data</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&quot;gender.px&quot;</span>))<span class="sc">$</span>data</span>
 <span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
 <span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt;   gender cohort     n</span></span>
 <span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt;</span></span>
@@ -449,7 +451,7 @@ the variables.</p>
 <span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">#&gt; 3 male   A         23</span></span>
 <span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#&gt; 4 male   B         28</span></span>
 <span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&#39;municipality.px&#39;</span>))<span class="sc">$</span>data</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&quot;municipality.px&quot;</span>))<span class="sc">$</span>data</span>
 <span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 3</span></span>
 <span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="co">#&gt;    municipality cohort     n</span></span>
 <span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt;</span></span>
@@ -478,20 +480,21 @@ change them in the px object before calling <code>px_micro()</code>.</p>
 <p>However, some keywords need to be changed individually for each micro
 file. To do so, create a data frame with the column ‘variable’ and a
 column for each px keyword to change.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>individual_keywords <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>variable     ,      <span class="sc">~</span>px_description,</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>                                       <span class="st">&quot;age&quot;</span>         ,    <span class="st">&quot;Age count 18-99&quot;</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>                                       <span class="st">&quot;gender&quot;</span>      ,       <span class="st">&quot;Gender count&quot;</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>                                       <span class="st">&quot;municipality&quot;</span>,  <span class="st">&quot;Municipality 2024&quot;</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>                                       )</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>individual_keywords <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="sc">~</span>variable, <span class="sc">~</span>px_description,</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span>, <span class="st">&quot;Age count 18-99&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;Gender count&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="st">&quot;municipality&quot;</span>, <span class="st">&quot;Municipality 2024&quot;</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>)</span></code></pre></div>
 <p>Supply this dataframe to the <code>keyword_values</code> argument of
 <code>px_micro()</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">px_micro</span>(x2, <span class="at">out_dir =</span> micro_dir, <span class="at">keyword_values =</span> individual_keywords)</span></code></pre></div>
 <p>DESCRIPTION is changed in the micro files:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&#39;age.px&#39;</span>)) <span class="sc">%&gt;%</span> <span class="fu">px_description</span>()</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&quot;age.px&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">px_description</span>()</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Age count 18-99&quot;</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&#39;gender.px&#39;</span>)) <span class="sc">%&gt;%</span> <span class="fu">px_description</span>()</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&quot;gender.px&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">px_description</span>()</span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Gender count&quot;</span></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&#39;municipality.px&#39;</span>)) <span class="sc">%&gt;%</span> <span class="fu">px_description</span>()</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="fu">px</span>(<span class="fu">file.path</span>(micro_dir, <span class="st">&quot;municipality.px&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">px_description</span>()</span>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Municipality 2024&quot;</span></span></code></pre></div>
 <div id="multilingual-files" class="section level3">
 <h3>Multilingual files</h3>
@@ -503,15 +506,15 @@ column for each px keyword to change.</p>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="fu">px_languages</span>(<span class="fu">c</span>(<span class="st">&quot;en&quot;</span>, <span class="st">&quot;kl&quot;</span>))</span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a></span>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>individual_keywords_ml <span class="ot">&lt;-</span> </span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>individual_keywords_ml <span class="ot">&lt;-</span></span>
 <span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>       <span class="sc">~</span>variable, <span class="sc">~</span>language,     <span class="sc">~</span>px_description, <span class="sc">~</span>px_matrix,</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>           <span class="st">&quot;age&quot;</span>,      <span class="st">&quot;en&quot;</span>,   <span class="st">&quot;Age count 18-99&quot;</span>,      <span class="st">&quot;AGE&quot;</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>           <span class="st">&quot;age&quot;</span>,      <span class="st">&quot;kl&quot;</span>,       <span class="st">&quot;Ukiut 18-99&quot;</span>,         <span class="cn">NA</span>,</span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>        <span class="st">&quot;gender&quot;</span>,      <span class="st">&quot;en&quot;</span>,      <span class="st">&quot;Gender count&quot;</span>,      <span class="st">&quot;GEN&quot;</span>,</span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>        <span class="st">&quot;gender&quot;</span>,      <span class="st">&quot;kl&quot;</span>,      <span class="st">&quot; Suiaassuseq&quot;</span>,         <span class="cn">NA</span>,</span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>  <span class="st">&quot;municipality&quot;</span>,      <span class="st">&quot;en&quot;</span>, <span class="st">&quot;Municipality 2024&quot;</span>,      <span class="st">&quot;MUN&quot;</span>,</span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>  <span class="st">&quot;municipality&quot;</span>,      <span class="st">&quot;kl&quot;</span>,      <span class="st">&quot;Kommuni 2024&quot;</span>,         <span class="cn">NA</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    <span class="sc">~</span>variable, <span class="sc">~</span>language, <span class="sc">~</span>px_description, <span class="sc">~</span>px_matrix,</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>    <span class="st">&quot;age&quot;</span>, <span class="st">&quot;en&quot;</span>, <span class="st">&quot;Age count 18-99&quot;</span>, <span class="st">&quot;AGE&quot;</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>    <span class="st">&quot;age&quot;</span>, <span class="st">&quot;kl&quot;</span>, <span class="st">&quot;Ukiut 18-99&quot;</span>, <span class="cn">NA</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>    <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;en&quot;</span>, <span class="st">&quot;Gender count&quot;</span>, <span class="st">&quot;GEN&quot;</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>    <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;kl&quot;</span>, <span class="st">&quot; Suiaassuseq&quot;</span>, <span class="cn">NA</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>    <span class="st">&quot;municipality&quot;</span>, <span class="st">&quot;en&quot;</span>, <span class="st">&quot;Municipality 2024&quot;</span>, <span class="st">&quot;MUN&quot;</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>    <span class="st">&quot;municipality&quot;</span>, <span class="st">&quot;kl&quot;</span>, <span class="st">&quot;Kommuni 2024&quot;</span>, <span class="cn">NA</span></span>
 <span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>  )</span>
 <span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a></span>
 <span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="fu">px_micro</span>(x3, <span class="at">out_dir =</span> micro_dir, <span class="at">keyword_values =</span> individual_keywords_ml)</span></code></pre></div>
@@ -525,7 +528,7 @@ language the value is set for.</p>
 <p>The filenames of the micro files are by default the name of the
 variable, however these can also be changed by passing a ‘filename’
 column to ‘keyword_values’</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>individual_keywords2 <span class="ot">&lt;-</span> </span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>individual_keywords2 <span class="ot">&lt;-</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  individual_keywords <span class="sc">|&gt;</span></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">filename =</span> <span class="fu">paste0</span>(variable, <span class="st">&quot;_2024&quot;</span>, <span class="st">&quot;.px&quot;</span>))</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a></span>
