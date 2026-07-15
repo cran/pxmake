@@ -334,7 +334,7 @@ validate_px_arguments <- function(input, data) {
   if (!any(
     is_px_file(input), is_xlsx_file(input), is.data.frame(input),
     is_rds_file(input), is_parquet_file(input), is.null(input),
-    is_url(input)
+    is_url(input), is_pxk_file(input)
   )) {
     error("Argument 'input' has wrong format. See ?px.")
   }
@@ -366,8 +366,12 @@ validate_px_arguments <- function(input, data) {
 #' @returns Nothing
 #' @keywords internal
 validate_px_save_arguments <- function(x, path, save_data, data_path) {
-  if (!any(is_px_file(path), is_xlsx_file(path), is_r_file(path))) {
-    error("Argument 'path' must be a path to an .px, .xlsx or .R file.")
+  if (!any(
+    is_px_file(path), is_pxk_file(path), is_xlsx_file(path),
+    is_r_file(path)
+  )
+  ) {
+    error("Argument 'path' must be a path to an .px, .pxk, .xlsx or .R file.")
   }
 
   if (!is.logical(save_data)) {
@@ -517,7 +521,7 @@ validate_px_classification_arguments <- function(name,
 #'
 #' @returns Nothing
 #' @keywords internal
-validate_px_data_arguments <- function(x, value, labels, sort, validate) {
+validate_px_data_arguments <- function(x, value, labels, validate) {
   if (!inherits(x, "px")) {
     error("Argument 'x' must be a px object.")
   }
@@ -534,24 +538,14 @@ validate_px_data_arguments <- function(x, value, labels, sort, validate) {
     }
   }
 
-  # labels and sort can only be used if value is missing
+  # labels can only be used if value is missing
   if (!missing(value) && !isFALSE(labels)) {
     error("Argument 'labels' can only be used if 'value' is missing.")
-  }
-
-  if (!missing(value) && !isFALSE(sort)) {
-    error("Argument 'sort' can only be used if 'value' is missing.")
   }
 
   if (!missing(validate)) {
     if (!is.logical(validate)) {
       error("Argument 'validate' must be TRUE or FALSE.")
-    }
-  }
-
-  if (!missing(sort)) {
-    if (!is.logical(sort)) {
-      error("Argument 'sort' must be TRUE or FALSE.")
     }
   }
 }

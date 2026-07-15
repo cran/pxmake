@@ -221,7 +221,10 @@ get_values_from_time_format <- function(str) {
         dplyr::mutate(
           value = paste0(.data$year, .data$index), .keep = "none"
         ) |>
-        dplyr::filter(as.numeric(.data$value) < interval_end) |>
+        dplyr::filter(
+          as.numeric(.data$value) >= interval_start,
+          as.numeric(.data$value) <= interval_end
+        ) |>
         dplyr::pull(1)
     }
   } else {
@@ -442,6 +445,7 @@ is_rds_file <- is_path_extension("rds")
 is_parquet_file <- is_path_extension("parquet")
 is_xlsx_file <- is_path_extension("xlsx")
 is_px_file <- is_path_extension("px")
+is_pxk_file <- is_path_extension("pxk")
 is_r_file <- is_path_extension("R")
 
 #' Create and return path to temporary directory
@@ -479,6 +483,7 @@ temp_file_with_extension <- function(extension) {
 }
 
 temp_px_file <- temp_file_with_extension(".px")
+temp_pxk_file <- temp_file_with_extension(".pxk")
 temp_rds_file <- temp_file_with_extension(".rds")
 temp_xlsx_file <- temp_file_with_extension(".xlsx")
 temp_r_file <- temp_file_with_extension(".R")
@@ -547,7 +552,7 @@ asterisk_tibble <- create_dummy_tibbles("*")
 #'
 #' Assumes the file is .px, or parquet.
 #'
-#' @param url
+#' @param url URL to px or parquet file
 #'
 #' @returns Character
 #' @keywords internal

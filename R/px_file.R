@@ -125,10 +125,11 @@ get_data_cube <- function(metadata_df, data_df) {
 #' Get lines for PX-file from px object
 #'
 #' @param x A px object
+#' @param path Path to save file at
 #'
 #' @returns A character vector
 #' @keywords internal
-format_px_object_as_lines <- function(x) {
+format_px_object_as_lines <- function(x, path) {
   metadata_df <- get_metadata_df_from_px(x)
 
   time_variables <- # nolint: object_usage_linter
@@ -179,27 +180,33 @@ format_px_object_as_lines <- function(x) {
     )) |>
     dplyr::pull(.data$line)
 
-  data_lines <-
-    get_data_cube(metadata_df = metadata_df, data_df = x$data) |>
-    mutate_all_vars_to_character() |>
-    dplyr::mutate(
-      dplyr::across(everything(), ~ tidyr::replace_na(.x, '"-"'))
-    ) |>
-    tidyr::unite("tmp", sep = " ") |>
-    dplyr::pull(.data$tmp)
+  if (is_px_file(path)) {
+    data_lines <-
+      get_data_cube(metadata_df = metadata_df, data_df = x$data) |>
+      mutate_all_vars_to_character() |>
+      dplyr::mutate(
+        dplyr::across(everything(), ~ tidyr::replace_na(.x, '"-"'))
+      ) |>
+      tidyr::unite("tmp", sep = " ") |>
+      dplyr::pull(.data$tmp)
 
-  c(metadata_lines, "DATA=", data_lines, ";")
+    data_part <- c("DATA=", data_lines, ";")
+  } else if (is_pxk_file(path)) {
+    data_part <- c("DATA=", "")
+  }
+
+  c(metadata_lines, data_part)
 }
 
-#' Save px object to PX-file
+#' Save px object to PX-file or .pxk file
 #'
 #' @param x A px object
-#' @param path Path to save PX-file at
+#' @param path Path to save file at
 #'
 #' @returns Nothing
 #' @keywords internal
 save_px_as_px_file <- function(x, path) {
-  px_lines <- format_px_object_as_lines(x)
+  px_lines <- format_px_object_as_lines(x, path)
 
   encoding_str <-
     x$table1 |>
@@ -215,9 +222,10 @@ save_px_as_px_file <- function(x, path) {
   close(file_connection)
 }
 
-#' Create a px object form a PX-file
+#' Create a px object form a PX-file or .pxk file
 #'
-#' @param path Path to a PX-file
+#' @param path Path to a PX-file or .pxk file
+#'
 #'
 #' @returns A px object
 #' @keywords internal
@@ -388,7 +396,7 @@ px_from_px_file <- function(path) {
       dplyr::bind_rows(
         current_df,
         dplyr::anti_join(
-          dplyr::select(name_relation, -.data$main_language), # nolint: object_usage_linter
+          dplyr::select(name_relation, -"main_language"), # nolint: object_usage_linter
           current_df,
           by = c("variable-code", "language", "variable-label")
         )
@@ -600,7 +608,7 @@ px_from_px_file <- function(path) {
   figures <-
     data_lines |>
     stringr::str_replace_all(";", "") |>
-    stringr::str_split(" ") |>
+    stringr::str_split("[, ;\t]+") |>
     unlist() |>
     stringr::str_subset("^$", negate = TRUE) |>
     tibble::enframe(name = NULL, value = figures_variable) |>
@@ -608,6 +616,9 @@ px_from_px_file <- function(path) {
 
   data_df <-
     do.call(tidyr::expand_grid, stub_and_heading_values) |>
+    (\(.) {
+      if (is_pxk_file(path)) dplyr::filter(., FALSE) else .
+    })() |>
     dplyr::bind_cols(figures) |>
     dplyr::as_tibble()
 
