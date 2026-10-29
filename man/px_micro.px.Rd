@@ -2,9 +2,12 @@
 % Please edit documentation in R/micro.R
 \name{px_micro}
 \alias{px_micro}
+\alias{px_micro.px}
 \title{Create micro PX-files}
 \usage{
 px_micro(x, out_dir = NULL, keyword_values = NULL)
+
+\method{px_micro}{px}(x, out_dir = NULL, keyword_values = NULL)
 }
 \arguments{
 \item{x}{A px object.}
@@ -34,10 +37,11 @@ The HEADING variables are use in all the micro files, and a file is created
 for each non-HEADING variable. The new PX-files are saved in a directory
 specified by \code{out_dir}.
 
-The main loop uses the furrr package for parallelisation. Use future::plan()
-to choose how to parallelise.
+Requires the furrr package. The main loop uses furrr for parallelisation. Use
+future::plan() to choose how to parallelise.
 }
 \examples{
+\dontshow{if (rlang::is_installed("furrr")) withAutoprint(\{ # examplesIf}
 # Create px object with cohort as HEADING
 x <-
   greenlanders |>
@@ -48,5 +52,5 @@ x <-
 # Create micro files, one for each of the non-HEADING variables (gender, age,
 # municipality)
 px_micro(x)
-
+\dontshow{\}) # examplesIf}
 }

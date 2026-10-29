@@ -1,4 +1,5 @@
 test_that("px_micro creates PX-files correctly", {
+  skip_if_not_installed("furrr")
   skip_if_not_installed("pxjob64Win", minimum_version = "1.1.0")
 
   expect_that_micro_files_are_correct <- function(x) {
@@ -56,6 +57,7 @@ test_that("px_micro creates PX-files correctly", {
 })
 
 test_that("px_micro creates valid PX-files", {
+  skip_if_not_installed("furrr")
   skip_if_not_installed("pxjob64Win", minimum_version = "1.1.0")
 
   expect_that_pxjob_runs_without_errors <- function(px) {
@@ -87,6 +89,8 @@ test_that("px_micro creates valid PX-files", {
 })
 
 test_that("px_micro can control data for individual tables", {
+  skip_if_not_installed("furrr")
+
   set.seed(1)
 
   df <-
@@ -133,6 +137,8 @@ test_that("px_micro can control data for individual tables", {
 })
 
 test_that("keyword_values are multilingual", {
+  skip_if_not_installed("furrr")
+
   x <-
     greenlanders |>
     px() |>
@@ -189,6 +195,8 @@ test_that("keyword_values are multilingual", {
 })
 
 test_that("px_micro can control filenames", {
+  skip_if_not_installed("furrr")
+
   df <-
     get_data_path("micro") |>
     readRDS() |>
@@ -216,6 +224,8 @@ test_that("px_micro can control filenames", {
 })
 
 test_that("px_micro removes headings where all values are NA", {
+  skip_if_not_installed("furrr")
+
   df <-
     get_data_path("micro") |>
     readRDS() |>
@@ -246,4 +256,50 @@ test_that("px_micro removes headings where all values are NA", {
     )
 
   expect_identical(micro_df, target)
+})
+
+test_that("px_micro preserves heading order with partially NA headings", {
+  skip_if_not_installed("furrr")
+
+  df <- dplyr::tibble(
+    studie = c("2006", "2010", "2006"),
+    municipality = c("M1", "M1", "M2"),
+    a = c("x", "x", NA)
+  )
+
+  out_dir <- temp_dir()
+
+  px(df) |>
+    px_heading(c("studie", "municipality")) |>
+    px_micro(out_dir = out_dir)
+
+  x_micro <- px(file.path(out_dir, "a.px"))
+
+  expect_identical(levels(x_micro$data$studie), c("2006", "2010"))
+  expect_identical(levels(x_micro$data$municipality), "M1")
+})
+
+test_that("px_micro keeps value notes on heading codes still in table", {
+  skip_if_not_installed("furrr")
+
+  df <- dplyr::tibble(
+    year = c("2018", "2010"),
+    municipality = c("a", "a"),
+    question = c("yes", NA)
+  )
+
+  out_dir <- temp_dir()
+
+  px(df) |>
+    px_heading(c("year", "municipality")) |>
+    px_valuenote(dplyr::tibble(
+      `variable-code` = "municipality",
+      code = "a",
+      valuenote = "note"
+    )) |>
+    px_micro(out_dir = out_dir)
+
+  x_micro <- px(file.path(out_dir, "question.px"))
+
+  expect_identical(px_valuenote(x_micro)$valuenote, "note")
 })

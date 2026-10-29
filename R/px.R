@@ -16,9 +16,11 @@
 #'
 #' If input is a data frame or NULL, a px object with minimal
 #' metadata is created.
+#'
+#' Reading `.parquet` files requires the arrow package.
 #' @param data Either a data frame or a path to an `.rds` or `.parquet` file
 #' with a data frame. This can only be used if `input` is an Excel metadata
-#' workbook.
+#' workbook. Reading `.parquet` files requires the arrow package.
 #' @eval param_validate()
 #'
 #' @returns A px object
@@ -93,6 +95,12 @@ px <- function(input = NULL, data = NULL, validate = TRUE) {
   return_px(px, validate)
 }
 
+#' @rdname px_save.px
+#' @export
+px_save <- function(x, path, save_data = TRUE, data_path = NULL) {
+  UseMethod("px_save")
+}
+
 #' Save px object to file
 #'
 #' @param x A px object.
@@ -105,7 +113,7 @@ px <- function(input = NULL, data = NULL, validate = TRUE) {
 #' Can only be used if `path` is an `.xlsx` file.
 #' @param data_path Path to an `.rds` or `.parquet` file to save data table at.
 #' Can only be used if `path` is an `.xlsx` or `.R` file, and `save_data` is
-#' `TRUE`.
+#' `TRUE`. Saving `.parquet` files requires the arrow package.
 #' @details
 #' Use `px_codepage()` to change file encoding.
 #'
@@ -128,7 +136,7 @@ px <- function(input = NULL, data = NULL, validate = TRUE) {
 #' px_save(x, file.path(tmp_dir, "population.R"))
 #'
 #' @export
-px_save <- function(x, path, save_data = TRUE, data_path = NULL) {
+px_save.px <- function(x, path, save_data = TRUE, data_path = NULL) {
   validate_px_save_arguments(x, path, save_data, data_path)
 
   if (is_px_file(path) || is_pxk_file(path)) {
@@ -204,6 +212,12 @@ fix_px <- function(x) {
   x
 }
 
+#' @rdname px_validate.px
+#' @export
+px_validate <- function(x) {
+  UseMethod("px_validate")
+}
+
 #' Check px object
 #'
 #' Runs a number of checks on px object to see if it is valid.
@@ -225,9 +239,7 @@ fix_px <- function(x) {
 #'   px_validate()
 #'
 #' @export
-px_validate <- function(x) {
-  error_if_not_list(x)
-  error_if_not_class_px(x)
+px_validate.px <- function(x) {
   error_if_not_list_of_data_frames(x)
   error_if_list_names_are_wrong(x)
   error_if_data_frame_is_missing_column(x)

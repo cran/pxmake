@@ -2,9 +2,12 @@
 % Please edit documentation in R/px.R
 \name{px_save}
 \alias{px_save}
+\alias{px_save.px}
 \title{Save px object to file}
 \usage{
 px_save(x, path, save_data = TRUE, data_path = NULL)
+
+\method{px_save}{px}(x, path, save_data = TRUE, data_path = NULL)
 }
 \arguments{
 \item{x}{A px object.}
@@ -22,7 +25,7 @@ Can only be used if \code{path} is an \code{.xlsx} file.}
 
 \item{data_path}{Path to an \code{.rds} or \code{.parquet} file to save data table at.
 Can only be used if \code{path} is an \code{.xlsx} or \code{.R} file, and \code{save_data} is
-\code{TRUE}.}
+\code{TRUE}. Saving \code{.parquet} files requires the arrow package.}
 }
 \value{
 Nothing

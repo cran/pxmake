@@ -111,18 +111,6 @@ error_if_mandatory_keyword <- function(x, keyword) {
 }
 
 ## validate_px checks
-error_if_not_list <- function(x) {
-  if (!is.list(x)) {
-    error("px object must be a list")
-  }
-}
-
-error_if_not_class_px <- function(x) {
-  if (!inherits(x, "px")) {
-    error("px object must have class 'px'")
-  }
-}
-
 error_if_not_list_of_data_frames <- function(x) {
   if (!all(sapply(x, is.data.frame))) {
     error("px object must be a list of data frames")
@@ -316,6 +304,15 @@ error_if_data_table_contains_duplicates <- function(x) {
   }
 }
 
+error_if_both_value_and_values_are_used <- function(df) {
+  if (all(c("value", "values") %in% names(df))) {
+    error(stringr::str_glue(
+      "The data frame can't contain both columns 'value' and 'values'. ",
+      "Use only one of them, preferably 'value'."
+    ))
+  }
+}
+
 is_url <- function(path) {
   if (!is.character(path) || length(path) != 1) {
     return(FALSE)
@@ -427,10 +424,6 @@ validate_px_save_arguments <- function(x, path, save_data, data_path) {
 #' @returns Nothing
 #' @keywords internal
 validate_px_micro_arguments <- function(x, out_dir) {
-  if (!inherits(x, "px")) {
-    error("Argument 'x' must be a px object.")
-  }
-
   if (!is.null(out_dir)) {
     if (!is.character(out_dir)) {
       error("Argument 'out_dir' must be a character string.")
@@ -522,10 +515,6 @@ validate_px_classification_arguments <- function(name,
 #' @returns Nothing
 #' @keywords internal
 validate_px_data_arguments <- function(x, value, labels, validate) {
-  if (!inherits(x, "px")) {
-    error("Argument 'x' must be a px object.")
-  }
-
   if (!missing(value)) {
     if (!(is.data.frame(value) || is.null(value))) {
       error("Argument 'value' must be a data frame or NULL.")

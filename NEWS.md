@@ -1,3 +1,18 @@
+# pxmake 0.22.0
+
+## Bug fixes and minor improvements
+- Add generic fors 'px_micro', 'px_save' and 'px_validate' to automatically
+check that input is px object, and align with other functions.
+- Sort headings properly when multiple headings exist in micro files.
+- Setting `px_figures` to current figures variable no longer breaks. (#510)
+- Only copy main language when adding languages to an already multilingual
+px file. (#517)
+- Changes 'values' to 'value' in `px_values` documentation and throw an error
+both 'value' and 'values' are used. (#509)
+- `px` handles metadata sub-keys that contain '='. (#356)
+- Move furrr and arrow to Suggests to reduce package install. (#478)
+- Add documentation for VARIABLECODE (#161)
+
 # pxmake 0.21.0
 
 ## Breaking changes
